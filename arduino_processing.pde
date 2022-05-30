@@ -7,13 +7,13 @@ Serial mySerial; //creates local serial object from serial library
 
 String myString = null; //a variable to collect serial data
 int nl = 10; //ASCII code for carage return in serial
-String gestures[] = {"CLEAR", "DELAY", "REVERB", "DISTORTION", "PITCH SHIFT"};
+String gestures[] = {"NO EFFECTS", "DISTORTION", "PITCH SHIFT", "DELAY & REVERB", "ALL EFFECTS"};
 int gestureSelect = 0;
-float pitch_deg = 0;
 float yaw_deg = 0;
+float pitch_deg = 0;
 float roll_deg = 0;
-float pitch_rad = 0;
 float yaw_rad = 0;
+float pitch_rad = 0;
 float roll_rad = 0;
 
 OscP5 oscP5;
@@ -40,42 +40,30 @@ void draw(){
       float[] values = float(split(myString, ' '));  
       
       gestureSelect = (int)(values[0]);
-      pitch_deg = (float)(values[1]);
-      yaw_deg = (float)(values[2]);
+      yaw_deg = (float)(values[1]);
+      pitch_deg = (float)(values[2]);
       roll_deg = (float)(values[3]);
-      
-           
-      if (pitch_deg < 0){
-        pitch_deg = pitch_deg + 360;
-      }
-      
-      if (yaw_deg < 0){
-        yaw_deg = yaw_deg + 360;
-      }
-      
-      if (roll_deg < 0){
-        roll_deg = roll_deg + 360;
-      }
-      
+               
+     
       println(gestureSelect, pitch_deg, yaw_deg, roll_deg);
       
       OscMessage gesture_sel = new OscMessage("/Gesture");
-      OscMessage pitchOrientation = new OscMessage("/Xval");
-      OscMessage yawOrientation = new OscMessage("/Yval");
-      OscMessage rollOrientation = new OscMessage("/Zval");
+      OscMessage yawOrientation = new OscMessage("/Yaw");
+      OscMessage pitchOrientation = new OscMessage("/Pitch");
+      OscMessage rollOrientation = new OscMessage("/Roll");
       
       gesture_sel.add(gestureSelect);  //add values to osc messages
-      pitchOrientation.add(pitch_deg); 
       yawOrientation.add(yaw_deg); 
+      pitchOrientation.add(pitch_deg); 
       rollOrientation.add(roll_deg);
       
       oscP5.send(gesture_sel, myRemoteLocation);   //send the messages
       oscP5.send(pitchOrientation, myRemoteLocation); 
       oscP5.send(yawOrientation, myRemoteLocation); 
       oscP5.send(rollOrientation, myRemoteLocation); 
-      
-      pitch_rad = (float)(pitch_deg / 180 * Math.PI);
+          
       yaw_rad = (float)(yaw_deg / 180 * Math.PI);
+      pitch_rad = (float)(pitch_deg / 180 * Math.PI);
       roll_rad = (float)(roll_deg / 180 * Math.PI);
       
       background(240);
