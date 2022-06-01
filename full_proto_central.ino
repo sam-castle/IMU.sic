@@ -110,66 +110,19 @@ void controlPeripheral(BLEDevice peripheral){
       //nothing
     }
 
-    if(gesture == 0){
-      Serial.print("0");
-      Serial.print(" ");
-      Serial.print("1000");
-      Serial.print(" ");
-      Serial.print("1000");
-      Serial.print(" ");
-      Serial.println("1000");
-      gesture = -1;
-      gestureChar.writeValue(gesture);
-    }
-
-    if(gesture == 1){
-      Serial.print("1");
-      Serial.print(" ");
-      Serial.print("1000");
-      Serial.print(" ");
-      Serial.print("1000");
-      Serial.print(" ");
-      Serial.println("1000");
-      gesture = -1;
-      gestureChar.writeValue(gesture);
-    }
-    
-    if(gesture == 2){
-      Serial.print("2");
-      Serial.print(" ");
-      Serial.print("1000");
-      Serial.print(" ");
-      Serial.print("1000");
-      Serial.print(" ");
-      Serial.println("1000");
-      gesture = -1;
-      gestureChar.writeValue(gesture);
-    }
-
-    if(gesture == 3){
-      Serial.print("3");
-      Serial.print(" ");
-      Serial.print("1000");
-      Serial.print(" ");
-      Serial.print("1000");
-      Serial.print(" ");
-      Serial.println("1000");
-      gesture = -1;
-      gestureChar.writeValue(gesture);
-    }
-    
-    if(gesture == 4){
-      Serial.print("4");
-      Serial.print(" ");
-      Serial.print("1000");
-      Serial.print(" ");
-      Serial.print("1000");
-      Serial.print(" ");
-      Serial.println("1000");
-      gesture = -1;
-      gestureChar.writeValue(gesture);
-    }
-    
+    for(int i = 0; i < 4; i++){
+      if(gesture == i){
+        Serial.print(i);
+        Serial.print(" ");
+        Serial.print("1000");
+        Serial.print(" ");
+        Serial.print("1000");
+        Serial.print(" ");
+        Serial.println("1000");
+        gesture = -1;
+        gestureChar.writeValue(gesture);
+      }
+    }   
   }
   
   Serial.println("- Peripheral device disconnected!");  
