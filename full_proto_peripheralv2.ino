@@ -19,7 +19,7 @@ BLEIntCharacteristic* rollChar = nullptr;
 BLEService* yscheulService = nullptr;
 
 
-const float accelerationThreshold = 2.8; // threshold of significant in G's
+const float accelerationThreshold = 2.5; // threshold of significant in G's
 const int numSamples = 119;
 
 int samplesRead = numSamples;
@@ -45,10 +45,10 @@ byte tensorArena[tensorArenaSize];
 // array to map gesture index to a name
 const char* GESTURES[] = {
   "double_tap",
-  "pulse",
-  "swipe",
-  "twist",
-  "wave"  
+  "swipe_right",
+  "swipe_left",
+  "circle",
+  "twist"  
 };
 
 #define NUM_GESTURES (sizeof(GESTURES) / sizeof(GESTURES[0]))
@@ -149,7 +149,7 @@ void setup() {
 
 void loop() {
 
-  // listen for BLE peripherals to connect:
+  // listen for BLE centrals to connect:
   BLEDevice central = BLE.central();
 
   
@@ -233,8 +233,8 @@ void loop() {
             }
 
            for (int i = 0; i < NUM_GESTURES; i++) {
-             if(tflOutputTensor->data.f[i] >= 0.93){
-               //Serial.println(GESTURES[i]); 
+             if(tflOutputTensor->data.f[i] >= 0.8){
+               Serial.println(GESTURES[i]); 
                
                if(central.connected()){
                  // write to bluetooth
@@ -242,19 +242,19 @@ void loop() {
                    gestureChar->writeValue(0);
                  }
 
-                 if(GESTURES[i] == "pulse"){
+                 if(GESTURES[i] == "swipe_right"){
                    gestureChar->writeValue(1);
                  }
 
-                 if(GESTURES[i] == "swipe"){
+                 if(GESTURES[i] == "swipe_left"){
                    gestureChar->writeValue(2);
                  }
 
-                 if(GESTURES[i] == "twist"){
+                 if(GESTURES[i] == "circle"){
                    gestureChar->writeValue(3);
                  }
 
-                 if(GESTURES[i] == "wave"){
+                 if(GESTURES[i] == "twist"){
                    gestureChar->writeValue(4);
                  }
                  

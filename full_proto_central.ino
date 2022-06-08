@@ -110,7 +110,7 @@ void controlPeripheral(BLEDevice peripheral){
       //nothing
     }
 
-    for(int i = 0; i < 4; i++){
+    for(int i = 0; i < 5; i++){
       if(gesture == i){
         Serial.print(i);
         Serial.print(" ");
